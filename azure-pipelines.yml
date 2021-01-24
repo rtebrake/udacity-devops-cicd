@@ -14,7 +14,7 @@ variables:
   webAppName: 'rtb-udacity-devops-cicd'
 
   # Agent VM image name
-  vmImageName: 'ubuntu-latest'
+  vmImageName: 'ubuntu-18.04'
 
   # Environment name
   environmentName: 'rtb-udacity-devops-cicd'
