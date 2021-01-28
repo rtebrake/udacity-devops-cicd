@@ -55,7 +55,7 @@ For verification purposes, the ML model can be queried for a prediction using Az
 Azure Pipelines will automically trigger a deployment, this screenshot shows several of these runs as a result of committing new code:
 ![azure pipeline](https://user-images.githubusercontent.com/23208470/106153339-bbd4ef80-617e-11eb-92ca-90878602e4c2.JPG)
 
-The pipeline consists of 2 stages, a build and deploy stage:
+The pipeline consists of 2 stages, a build and deploy stage:  
 ![pipeline stages](https://user-images.githubusercontent.com/23208470/106153465-deff9f00-617e-11eb-8a2d-7cd3f71781ee.JPG)
 
 Using the Azure Pipeline logs, one can verify the sucessful deployment of the webapp, as the following log snippet shows
