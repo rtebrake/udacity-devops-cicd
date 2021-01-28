@@ -40,7 +40,8 @@ A build using Github Actions should look like the following screenshot.
 
 
 An Azure Webapp is used to host the application. It is initially created using Azure CLI using the following command. The *--sku* parameter is passed to prevent a more expensive SKU from being used (by default) as it is not needed for this deployment.
-```az webapp up -n rtb-udacity-devops-cicd --sku b1
+```
+az webapp up -n rtb-udacity-devops-cicd --sku b1
 ```
 In case the Azure Webapp was created using the GUI, note the additional step of setting *SCM_DO_BUILD_DURING_DEPLOYMENT* in the official documentation here: https://docs.microsoft.com/en-us/azure/devops/pipelines/ecosystems/python-webapp?view=azure-devops#run-the-pipeline
 
