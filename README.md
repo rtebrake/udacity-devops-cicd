@@ -17,23 +17,41 @@ Excel sheet: https://1drv.ms/x/s!AnsZwmusT5D--zvw8992Hw9N78gL?e=LALX6O (Note: th
 
 ## Instructions
 
-Note the following Architectural diagram for an overview of how the system works:
+Note the following Architectural diagram for an overview of how the system is set up:
 ![archdiagram](https://user-images.githubusercontent.com/23208470/106151773-fdfd3180-617c-11eb-9560-69cafd3b1e92.JPG)
 
-The Azure webapp is hosted at https://rtb-udacity-devops-cicd.azurewebsites.net as can also be seen from the following screenshot
+The steps below describe how this project can be used. The goal of this setup is to have an automated test and lint step using Github Actions and an automated deployment to Azure using Azure Pipelines. These steps are automtically triggered after committing new code to the Github repository.
 
-![appservice](https://user-images.githubusercontent.com/23208470/106152364-a57a6400-617d-11eb-9818-b756ec65fb21.JPG)
+###
+Create a repository (forked of this repository), create SSH keys and upload these to your Github account  
+Clone  your repository into the Azure Cloud Shell  
 
-The Github repository has been cloned into Azure Cloud Shell:
 ![1 Git-clone](https://user-images.githubusercontent.com/23208470/106152664-01dd8380-617e-11eb-862d-c8ed16b2453d.JPG)
 
-When running the 'make all' command, all tests pass:
+
+Perform a local test by using a *make all*. All tests should pass, similar to this screenshot.
+
 ![2 make_all](https://user-images.githubusercontent.com/23208470/106152775-1d488e80-617e-11eb-842e-cdc40c417a73.JPG)
 
-Using Github Actions we can build,test and lint the code:
+
+To do a remote test, we use Github Actions. Note the *pythonapp.yml* in the repository to see how this is set up.
+A build using Github Actions should look like the following screenshot.
 ![3 Github_Actions_build](https://user-images.githubusercontent.com/23208470/106152901-3ea97a80-617e-11eb-9691-8b453b082e36.JPG) 
 
-Azure Pipelines is used to do the deployment of the code, the pipeline can be seen in the screenshot below:
+
+An Azure Webapp is used to host the application. It is initially created using Azure CLI using the following command. The *--sku* parameter is passed to prevent a more expensive SKU from being used (by default) as it is not needed for this deployment.
+```az webapp up -n rtb-udacity-devops-cicd --sku b1
+```
+In case the Azure Webapp was created using the GUI, note the additional step of setting *SCM_DO_BUILD_DURING_DEPLOYMENT* in the official documentation here: https://docs.microsoft.com/en-us/azure/devops/pipelines/ecosystems/python-webapp?view=azure-devops#run-the-pipeline
+
+This specific deployment of the webapp can be found at at https://rtb-udacity-devops-cicd.azurewebsites.net as can also be seen from the following screenshot
+![appservice](https://user-images.githubusercontent.com/23208470/106152364-a57a6400-617d-11eb-9818-b756ec65fb21.JPG)
+
+For verification purposes, the ML model can be queried for a prediction using Azure Cloud Shell.
+![b AzureCloudShell_Prediction](https://user-images.githubusercontent.com/23208470/106153552-f50d5f80-617e-11eb-8268-950b3c247949.JPG)
+
+
+Azure Pipelines will automically trigger a deployment, this screenshot shows several of these runs as a result of committing new code:
 ![azure pipeline](https://user-images.githubusercontent.com/23208470/106153339-bbd4ef80-617e-11eb-92ca-90878602e4c2.JPG)
 
 The pipeline consists of 2 stages, a build and deploy stage:
@@ -57,10 +75,8 @@ Using the Azure Pipeline logs, one can verify the sucessful deployment of the we
 2021-01-28T13:47:13.3265282Z ##[section]Finishing: Deploy Azure Web App : rtb-udacity-devops-cicd
 ```
 
-For verification purposes, the ML model can be queried for a prediction using Azure Cloud Shell.
-![b AzureCloudShell_Prediction](https://user-images.githubusercontent.com/23208470/106153552-f50d5f80-617e-11eb-8268-950b3c247949.JPG)
 
-Viewing the log files of the application can be done in different ways, for instance using the Azure Cloud shell. The command to do this for this deployment is the following:
+Viewing the log files of the deployed application can be done in different ways, for instance using the Azure Cloud shell. The command to do this for this deployment is the following:
 ```
 az webapp log tail --resource-group robin_rg_linux_centralus --name rtb-udacity-devops-cicd
 ```
@@ -69,6 +85,21 @@ Further information regarding the *az webapp log tail* command can be found here
 Running this command in Azure Cloud Shell should produce results similar to the screenshot below. 
 
 ![logtail](https://user-images.githubusercontent.com/23208470/106155258-c2646680-6180-11eb-92f5-2a5529594253.JPG)
+
+
+## Load testing
+
+Load testing was done with Locust(https://locust.io). Locust was configured to run against 2 separate endpoints:
+* The main page (providing the *SKLearn* output)
+* The Predict API, which is a POST command, not a GET.
+
+Querying just the main SKLearn homepage would not suffice as that will not actually prove that the API is providing results. To allow Locust to actually query the API, a POST command with a JSON payload has to specified. The sample JSON data used for the local Azure Cloud Shell tests is used in this case.
+
+![locustfile](https://user-images.githubusercontent.com/23208470/106162698-afee2b00-6188-11eb-9e81-4f91450cd393.JPG)
+
+The screenshot below shows Locust running against this specific deployment of the app (*HOST:*) and not failing any the tests, not against the main HTTPS page but also not against the API endpoint using the POST command and the JSON payload.
+
+![C Locust](https://user-images.githubusercontent.com/23208470/106162211-25a5c700-6188-11eb-832b-35f0eaca65cd.JPG)
 
 
 ## Enhancements
@@ -88,4 +119,4 @@ Various enhancement can be considered for the future:
 
 ## Screenshots 
 
-![3 Github_Actions_build](https://user-images.githubusercontent.com/23208470/105635427-0561c980-5e63-11eb-87cc-7fe5ece5cf85.JPG)
+
