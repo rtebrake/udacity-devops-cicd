@@ -34,7 +34,7 @@ Perform a local test by using a *make all*. All tests should pass, similar to th
 ![2 make_all](https://user-images.githubusercontent.com/23208470/106152775-1d488e80-617e-11eb-842e-cdc40c417a73.JPG)
 
 
-To do a remote test, we use Github Actions. Use the *pythonapp.yml* in the repository the workflow.
+To do a remote test, we use Github Actions. Use the *pythonapp.yml* in the repository to see the workflow.
 A build using Github Actions should look like the following screenshot.
 ![3 Github_Actions_build](https://user-images.githubusercontent.com/23208470/106152901-3ea97a80-617e-11eb-9691-8b453b082e36.JPG) 
 
