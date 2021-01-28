@@ -20,7 +20,7 @@ Excel sheet: https://1drv.ms/x/s!AnsZwmusT5D--zvw8992Hw9N78gL?e=LALX6O (Note: th
 Note the following Architectural diagram for an overview of how the system is set up:
 ![archdiagram](https://user-images.githubusercontent.com/23208470/106151773-fdfd3180-617c-11eb-9560-69cafd3b1e92.JPG)
 
-The steps below describe how this project can be used. The goal of this setup is to have an automated test and lint step using Github Actions and an automated deployment to Azure using Azure Pipelines. These steps are automtically triggered after committing new code to the Github repository.
+The steps below describe how this project can be deployed and used. The goal of this setup is to have an automated test and lint step using Github Actions and an automated deployment to Azure using Azure Pipelines. These steps are automatically triggered after committing new code to the Github repository.
 
 ###
 Create a repository (forked of this repository), create SSH keys and upload these to your Github account  
@@ -34,7 +34,7 @@ Perform a local test by using a *make all*. All tests should pass, similar to th
 ![2 make_all](https://user-images.githubusercontent.com/23208470/106152775-1d488e80-617e-11eb-842e-cdc40c417a73.JPG)
 
 
-To do a remote test, we use Github Actions. Note the *pythonapp.yml* in the repository to see how this is set up.
+To do a remote test, we use Github Actions. Use the *pythonapp.yml* in the repository the workflow.
 A build using Github Actions should look like the following screenshot.
 ![3 Github_Actions_build](https://user-images.githubusercontent.com/23208470/106152901-3ea97a80-617e-11eb-9691-8b453b082e36.JPG) 
 
@@ -112,11 +112,5 @@ Various enhancement can be considered for the future:
 ## Demo 
 
 <TODO: Add link Screencast on YouTube>
-
-
-
-
-
-## Screenshots 
 
 
