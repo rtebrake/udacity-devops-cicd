@@ -109,7 +109,7 @@ Various enhancement can be considered for the future:
 * Currently it only serves one Machine Learning model, additional ML models could be implemented for different use-cases
 * The API can be enhanced to allow for different scenarios, including exposing this to 3rd parties. This would require further investigation how to properly authorize and authenticate those 3rd parties. 
 
-## Demo 
+## Youtube link 
 
 <TODO: Add link Screencast on YouTube>
 
